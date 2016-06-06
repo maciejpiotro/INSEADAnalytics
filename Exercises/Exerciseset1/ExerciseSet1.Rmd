@@ -86,6 +86,35 @@ pnl_plot(SPY)
 
 **Your Answers here:**
 <br>
+1
+
+website_used = "yahoo" # can be "yahoo" or other ( see help(getSymbols) )
+
+mytickers is defined as a vector consisting of two tickers:
+mytickers = c("SPY", "AAPL")
+
+definition of start date:
+startDate = "2001-01-01"
+
+create a table to fit all tickers listed in mytickers:
+StockPrices=matrix(rep(0,nrow(tmp)*length(mytickers)), ncol=length(mytickers))
+
+download share pricces:
+  for (ticker_index in 1:length(mytickers)){
+    ticker_to_get = mytickers[ticker_index]
+    print(paste("\nDownloading ticker ", ticker_to_get, " ..."))
+    tmpdata<-as.matrix(try(getSymbols(Symbols=ticker_to_get,from = startDate,auto.assign=FALSE)))
+    if (!inherits(tmpdata, "try-error"))
+    
+    
+
+2
+<br>
+cumulative: round(100*sum(StockReturns[,2]),1) = `r round(100*sum(StockReturns[,2]),1)`%
+<br>
+average daily: round(100*mean(StockReturns[,2]),3) = `r round(100*mean(StockReturns[,2]),3)`%;
+<br>
+standard deviation: round(100*sd(StockReturns[,2]),3) = `r round(100*sd(StockReturns[,2]),3)`%;
 <br>
 <br>
 <br>
@@ -127,10 +156,24 @@ We can also transpose the matrix of returns to create a new "horizontal" matrix.
 
 **Your Answers here:**
 <br>
-<br>
-<br>
-<br>
+1.
 
+<br>
+nrow(transposedData) 
+<br>
+ncol(transposedData)
+<br>
+<br>
+2.
+<br>
+transposedData = t(StockReturns)
+<br>
+portfolio <- t(apply(transposedData, 2, mean))
+<br>
+names(portfolio) <- colnames(transposedData)
+<br>
+pnl_plot(portfolio)
+<br>
 <hr>
 <hr>
 
@@ -145,7 +188,11 @@ This is an important step and will get you to think about the overall process on
 
 **Your Answers here:**
 <br>
+1.
 <br>
+In dataSet1.r file we have to change the following:
+<br>
+from startDate = "2001-01-01" to startDate = "2000-12-28" (the last trading day before 2001-01-01) to get share price that will allow us to calculate daiy return on 2001-01-01
 <br>
 <br>
 
@@ -179,7 +226,9 @@ myData + StockReturns[1:40,])
 
 **Your Answers here:**
 <br>
+1.
 <br>
+This command compares data on stockreturns in the first 20 rows with CSV file. I expect the result to be 0, but instead it shows 20. Potentially this might be because of rounding the numbers. 
 <br>
 <br>
 
